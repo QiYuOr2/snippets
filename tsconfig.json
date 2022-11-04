@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "esnext",
+    "lib": ["esnext", "DOM"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "~vue/*": ["./lib/vue/*"],
+      "~shared/*": ["./lib/shared/*"]
+    }
+  },
+  "include": ["./lib/**/*.ts", "./lib/**/*.vue", "./demo/**/*.ts", "./demo/**/*.vue"]
+}
