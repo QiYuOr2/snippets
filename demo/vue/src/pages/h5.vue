@@ -7,5 +7,8 @@ const [bottomSheetVisible, toggleBottomSheetVisible] = useToggle(false);
 
 <template>
   <div>H5相关Demo</div>
-  <BottomSheet v-model:visible="bottomSheetVisible"></BottomSheet>
+  <button @click="toggleBottomSheetVisible()">Bottom Sheet开关</button>
+  <BottomSheet v-model:visible="bottomSheetVisible">
+    <div>123</div>
+  </BottomSheet>
 </template>
