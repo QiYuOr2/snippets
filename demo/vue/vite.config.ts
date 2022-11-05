@@ -8,6 +8,7 @@ export default defineConfig({
     alias: {
       "~vue": path.resolve(__dirname, "../../lib/vue"),
       "~shared": path.resolve(__dirname, "../../lib/shared"),
+      "~style": path.resolve(__dirname, "../../lib/style"),
     },
   },
   plugins: [vue()],
