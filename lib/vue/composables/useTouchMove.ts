@@ -1,4 +1,4 @@
-import { computed, ref, watchEffect } from "vue-demi";
+import { computed, ref, watchEffect } from 'vue-demi';
 
 interface UseTouchMoveOptions {
   onTouchStart?: (event: TouchEvent) => void;
@@ -18,13 +18,18 @@ export default function useTouchMove(options?: UseTouchMoveOptions) {
   const x = ref(0);
   const y = ref(0);
 
-  watchEffect(() => {
-    console.log(oldX.value, oldY.value, x.value, y.value);
-  });
-
   // touchMove移动距离
   const distanceX = computed(() => x.value - oldX.value);
   const distanceY = computed(() => y.value - oldY.value);
+
+  const startTime = ref(0);
+  const endTime = ref(0);
+  const deltaTime = computed(() => {
+    if (endTime.value === 0 || startTime.value === 0) {
+      return 0;
+    }
+    return endTime.value - startTime.value;
+  });
 
   const handler = (eventHandler: (event: TouchEvent) => void, hooks?: TouchHandlerHooks) => {
     return (event: TouchEvent) => {
@@ -41,8 +46,6 @@ export default function useTouchMove(options?: UseTouchMoveOptions) {
 
   const touchStart = handler(
     (event: TouchEvent) => {
-      console.log("touchStart", distanceY.value);
-
       // 清空x, y
       oldX.value = 0;
       oldY.value = 0;
@@ -53,6 +56,9 @@ export default function useTouchMove(options?: UseTouchMoveOptions) {
     },
     {
       afterTriggerEventHandler() {
+        // 记录点下的时间
+        startTime.value = Date.now();
+        endTime.value = 0;
         // 缓存首次点击位置
         oldX.value = x.value;
         oldY.value = y.value;
@@ -60,21 +66,31 @@ export default function useTouchMove(options?: UseTouchMoveOptions) {
     }
   );
   const touchMove = handler((event: TouchEvent) => {
-    // console.log("touchMove", event);
     options?.onTouchMove?.(event);
   });
-  const touchEnd = handler((event: TouchEvent) => {
-    console.log("touchEnd", distanceY.value);
-    options?.onTouchEnd?.(event);
-  });
+  const touchEnd = handler(
+    (event: TouchEvent) => {
+      options?.onTouchEnd?.(event);
+    },
+    {
+      beforeTriggerEventHandler() {
+        // 结束时间
+        endTime.value = Date.now();
+      },
+    }
+  );
 
   return {
+    oldX,
+    oldY,
     x,
     y,
     distanceX,
     distanceY,
-    oldX,
-    oldY,
+
+    startTime,
+    endTime,
+    deltaTime,
 
     touchStart,
     touchMove,

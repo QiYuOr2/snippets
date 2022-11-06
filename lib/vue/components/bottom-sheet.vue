@@ -5,6 +5,10 @@ import bemCreator from '~shared/bem';
 import useToggle from '~vue/composables/useToggle';
 import useTouchMove from '~vue/composables/useTouchMove';
 
+/**
+ * 关闭时展示activebar的高度
+ */
+const ActiveBarHeight = 26;
 const bem = bemCreator('bottom-sheet');
 
 const props = withDefaults(
@@ -12,10 +16,12 @@ const props = withDefaults(
     visible: boolean;
     height?: number;
     disableOverlayClick?: boolean;
+    showActiveBar?: boolean;
   }>(),
   {
     disableOverlayClick: false,
     height: 500,
+    showActiveBar: false,
   }
 );
 
@@ -29,43 +35,59 @@ const selfVisible = computed({
   },
   set(val) {
     emits('update:visible', val);
+    willToPosition.value = val ? '0px' : `${-1 * (props.height - (props.showActiveBar ? ActiveBarHeight : 0))}px`;
   },
 });
+const toggleSelfVisible = (value?: boolean) => {
+  selfVisible.value = value === undefined ? !selfVisible.value : value;
+};
 
 const overlayClickHandler = () => {
   if (props.disableOverlayClick) {
     return;
   }
-  selfVisible.value = false;
+  toggleSelfVisible(false);
 };
 
+/**
+ * 基准速度
+ */
+const BasicV = 0.6;
 const [isTouching, toggleIsTouching] = useToggle(false);
 const willToPosition = ref('');
-const { distanceY, touchStart, touchMove, touchEnd } = useTouchMove({
+const { distanceY, deltaTime, touchStart, touchMove, touchEnd } = useTouchMove({
   onTouchStart() {
     toggleIsTouching(true);
     willToPosition.value = '';
   },
   onTouchEnd() {
     toggleIsTouching(false);
-    willToPosition.value = '0px';
-    if (distanceY.value > props.height / 2) {
-      selfVisible.value = false;
+
+    const v = Math.abs(distanceY.value) / deltaTime.value;
+
+    if (distanceY.value > props.height / 2 || (selfVisible.value && distanceY.value > 0 && v > BasicV)) {
+      toggleSelfVisible(false);
+    } else {
+      willToPosition.value = '0px';
     }
   },
 });
-const animeStyle = computed(() => {
+
+/**
+ * 触发模式动画计算
+ */
+const triggerAnimeStyle = computed(() => {
   const commonStyle = {
     height: `${props.height}px`,
   };
   return selfVisible.value
     ? {
         ...commonStyle,
-        bottom: willToPosition.value === '' ? `-${distanceY.value}px` : willToPosition.value,
+        bottom: willToPosition.value === '' ? `${-1 * distanceY.value}px` : willToPosition.value,
       }
     : {
         ...commonStyle,
-        bottom: `-${props.height}px`,
+        bottom: `${-1 * (props.height - (props.showActiveBar ? ActiveBarHeight : 0))}px`,
       };
 });
 </script>
@@ -75,8 +97,8 @@ const animeStyle = computed(() => {
     <Transition name="fade">
       <div v-if="selfVisible" class="overlay" @click="overlayClickHandler"></div>
     </Transition>
-    <div :class="bem('', { active: selfVisible, touching: isTouching })" :style="animeStyle">
-      <div :class="bem('header')" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
+    <div :class="bem('', { active: selfVisible, touching: isTouching })" :style="triggerAnimeStyle">
+      <div :class="bem('header')" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @click="toggleSelfVisible()">
         <div class="active-bar"></div>
       </div>
       <div :class="bem('content')">
