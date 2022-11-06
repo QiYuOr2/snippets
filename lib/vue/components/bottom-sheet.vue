@@ -1,23 +1,26 @@
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, ref } from 'vue';
 
-import bemCreator from "~shared/bem";
-import useTouchMove from "~vue/composables/useTouchMove";
+import bemCreator from '~shared/bem';
+import useToggle from '~vue/composables/useToggle';
+import useTouchMove from '~vue/composables/useTouchMove';
 
-const bem = bemCreator("bottom-sheet");
+const bem = bemCreator('bottom-sheet');
 
 const props = withDefaults(
   defineProps<{
     visible: boolean;
+    height?: number;
     disableOverlayClick?: boolean;
   }>(),
   {
     disableOverlayClick: false,
+    height: 500,
   }
 );
 
 const emits = defineEmits<{
-  (event: "update:visible", value: boolean): void;
+  (event: 'update:visible', value: boolean): void;
 }>();
 
 const selfVisible = computed({
@@ -25,7 +28,7 @@ const selfVisible = computed({
     return props.visible;
   },
   set(val) {
-    emits("update:visible", val);
+    emits('update:visible', val);
   },
 });
 
@@ -36,7 +39,35 @@ const overlayClickHandler = () => {
   selfVisible.value = false;
 };
 
-const { distanceY, touchStart, touchMove, touchEnd } = useTouchMove();
+const [isTouching, toggleIsTouching] = useToggle(false);
+const willToPosition = ref('');
+const { distanceY, touchStart, touchMove, touchEnd } = useTouchMove({
+  onTouchStart() {
+    toggleIsTouching(true);
+    willToPosition.value = '';
+  },
+  onTouchEnd() {
+    toggleIsTouching(false);
+    willToPosition.value = '0px';
+    if (distanceY.value > props.height / 2) {
+      selfVisible.value = false;
+    }
+  },
+});
+const animeStyle = computed(() => {
+  const commonStyle = {
+    height: `${props.height}px`,
+  };
+  return selfVisible.value
+    ? {
+        ...commonStyle,
+        bottom: willToPosition.value === '' ? `-${distanceY.value}px` : willToPosition.value,
+      }
+    : {
+        ...commonStyle,
+        bottom: `-${props.height}px`,
+      };
+});
 </script>
 
 <template>
@@ -44,7 +75,7 @@ const { distanceY, touchStart, touchMove, touchEnd } = useTouchMove();
     <Transition name="fade">
       <div v-if="selfVisible" class="overlay" @click="overlayClickHandler"></div>
     </Transition>
-    <div :class="bem('', { active: selfVisible })" :style="selfVisible ? { bottom: `-${distanceY}px` } : {}">
+    <div :class="bem('', { active: selfVisible, touching: isTouching })" :style="animeStyle">
       <div :class="bem('header')" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd">
         <div class="active-bar"></div>
       </div>
@@ -59,8 +90,6 @@ const { distanceY, touchStart, touchMove, touchEnd } = useTouchMove();
 :root {
   --zindex-overlay: 2000;
   --zindex-bottom-sheet: 2001;
-
-  --height-bottom-sheet: 500px;
 
   --color-active-bar: #e2e2e2;
 }
@@ -78,12 +107,10 @@ const { distanceY, touchStart, touchMove, touchEnd } = useTouchMove();
 
 .bottom-sheet {
   position: fixed;
-  bottom: calc(-1 * var(--height-bottom-sheet));
   left: 0;
   right: 0;
   z-index: var(--zindex-bottom-sheet);
 
-  height: var(--height-bottom-sheet);
   background: #fff;
 
   transition: bottom 0.3s;
@@ -91,6 +118,10 @@ const { distanceY, touchStart, touchMove, touchEnd } = useTouchMove();
   &--active {
     bottom: 0;
     transition: bottom 0.3s;
+  }
+
+  &--touching {
+    transition: bottom 0s;
   }
 
   &__header {
