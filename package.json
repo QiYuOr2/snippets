@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:vue": "pnpm --filter \"@snippets/vue-demo\" run dev"
+    "dev:vue": "pnpm --filter \"@snippets/vue-demo\" run dev",
+    "build:vue": "pnpm --filter \"@snippets/vue-demo\" run build"
   },
   "keywords": [],
   "author": "",

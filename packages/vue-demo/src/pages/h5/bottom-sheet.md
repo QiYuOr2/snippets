@@ -11,12 +11,14 @@ import useToggle from "@lib/vue/composables/useToggle";
 const [visible, toggle] = useToggle(false);
 </script>
 
+<ClientOnly>
 <div>
   <button class="button" @click="toggle()">点击切换弹层状态</button>
 </div>
 <BottomSheet v-model:visible="visible" show-active-bar>
   <div class="px-4">内容</div>
 </BottomSheet>
+</ClientOnly>
 
 <route lang="yaml">
 meta:

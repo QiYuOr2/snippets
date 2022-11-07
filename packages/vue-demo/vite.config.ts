@@ -15,6 +15,12 @@ import Unocss from "unocss/vite";
 import Shiki from "markdown-it-shiki";
 
 export default defineConfig({
+  base: "/snippets/",
+
+  build: {
+    outDir: "../../dist/vue-demo",
+  },
+
   resolve: {
     alias: {
       "~/": `${path.resolve(__dirname, "src")}/`,
@@ -134,7 +140,6 @@ export default defineConfig({
   },
 
   ssr: {
-    // TODO: workaround until they support native ESM
     noExternal: ["workbox-window", /vue-i18n/],
   },
 });
