@@ -1,4 +1,4 @@
-import { computed, ref, watchEffect } from 'vue-demi';
+import { computed, ref, watchEffect } from "vue-demi";
 
 interface UseTouchMoveOptions {
   onTouchStart?: (event: TouchEvent) => void;
@@ -22,6 +22,10 @@ export default function useTouchMove(options?: UseTouchMoveOptions) {
   const distanceX = computed(() => x.value - oldX.value);
   const distanceY = computed(() => y.value - oldY.value);
 
+  watchEffect(() => {
+    console.log(oldY.value, y.value);
+  });
+
   const startTime = ref(0);
   const endTime = ref(0);
   const deltaTime = computed(() => {
@@ -34,12 +38,10 @@ export default function useTouchMove(options?: UseTouchMoveOptions) {
   const handler = (eventHandler: (event: TouchEvent) => void, hooks?: TouchHandlerHooks) => {
     return (event: TouchEvent) => {
       hooks?.beforeTriggerEventHandler?.(event);
-      options?.preventDefault && event.preventDefault();
 
+      options?.preventDefault && event.preventDefault();
       eventHandler(event);
-      const touchPoint = event.touches[0];
-      x.value = touchPoint?.pageX ?? 0;
-      y.value = touchPoint?.pageY ?? 0;
+
       hooks?.afterTriggerEventHandler?.(event);
     };
   };
@@ -55,19 +57,35 @@ export default function useTouchMove(options?: UseTouchMoveOptions) {
       options?.onTouchStart?.(event);
     },
     {
-      afterTriggerEventHandler() {
+      afterTriggerEventHandler(event) {
         // 记录点下的时间
         startTime.value = Date.now();
         endTime.value = 0;
+
+        // 记录首次点击位置
+        const touchPoint = event.touches[0];
+        x.value = touchPoint?.pageX ?? 0;
+        y.value = touchPoint?.pageY ?? 0;
+
         // 缓存首次点击位置
         oldX.value = x.value;
         oldY.value = y.value;
       },
     }
   );
-  const touchMove = handler((event: TouchEvent) => {
-    options?.onTouchMove?.(event);
-  });
+  const touchMove = handler(
+    (event: TouchEvent) => {
+      options?.onTouchMove?.(event);
+    },
+    {
+      afterTriggerEventHandler(event) {
+        // 记录每次滑动的位置
+        const touchPoint = event.touches[0];
+        x.value = touchPoint?.pageX ?? 0;
+        y.value = touchPoint?.pageY ?? 0;
+      },
+    }
+  );
   const touchEnd = handler(
     (event: TouchEvent) => {
       options?.onTouchEnd?.(event);

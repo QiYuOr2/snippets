@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, ref } from "vue";
 
-import bemCreator from '~shared/bem';
-import useToggle from '~vue/composables/useToggle';
-import useTouchMove from '~vue/composables/useTouchMove';
+import bemCreator from "~shared/bem";
+import useToggle from "~vue/composables/useToggle";
+import useTouchMove from "~vue/composables/useTouchMove";
 
 /**
  * 关闭时展示activebar的高度
  */
 const ActiveBarHeight = 26;
-const bem = bemCreator('bottom-sheet');
+const bem = bemCreator("bottom-sheet");
 
 const props = withDefaults(
   defineProps<{
@@ -26,7 +26,7 @@ const props = withDefaults(
 );
 
 const emits = defineEmits<{
-  (event: 'update:visible', value: boolean): void;
+  (event: "update:visible", value: boolean): void;
 }>();
 
 const selfVisible = computed({
@@ -34,8 +34,7 @@ const selfVisible = computed({
     return props.visible;
   },
   set(val) {
-    emits('update:visible', val);
-    willToPosition.value = val ? '0px' : `${-1 * (props.height - (props.showActiveBar ? ActiveBarHeight : 0))}px`;
+    emits("update:visible", val);
   },
 });
 const toggleSelfVisible = (value?: boolean) => {
@@ -52,23 +51,25 @@ const overlayClickHandler = () => {
 /**
  * 基准速度
  */
-const BasicV = 0.6;
+const BasicV = 0.5;
 const [isTouching, toggleIsTouching] = useToggle(false);
-const willToPosition = ref('');
+const willToPosition = ref("");
 const { distanceY, deltaTime, touchStart, touchMove, touchEnd } = useTouchMove({
   onTouchStart() {
     toggleIsTouching(true);
-    willToPosition.value = '';
+    willToPosition.value = "";
   },
   onTouchEnd() {
     toggleIsTouching(false);
 
     const v = Math.abs(distanceY.value) / deltaTime.value;
 
+    // 向下滑动 => 距离超过高度一般 or 方向正确 速度大于基准值
     if (distanceY.value > props.height / 2 || (selfVisible.value && distanceY.value > 0 && v > BasicV)) {
       toggleSelfVisible(false);
-    } else {
-      willToPosition.value = '0px';
+    } else if (distanceY.value < 0 && !selfVisible.value) {
+      toggleSelfVisible();
+      willToPosition.value = "0px";
     }
   },
 });
@@ -83,7 +84,7 @@ const triggerAnimeStyle = computed(() => {
   return selfVisible.value
     ? {
         ...commonStyle,
-        bottom: willToPosition.value === '' ? `${-1 * distanceY.value}px` : willToPosition.value,
+        bottom: isTouching.value ? `${-1 * distanceY.value}px` : willToPosition.value,
       }
     : {
         ...commonStyle,
