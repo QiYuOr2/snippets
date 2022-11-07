@@ -1,0 +1,1 @@
+import{f as s,o as c,c as n,F as t,b as e}from"./app.e6063f4e.js";const o={},a=e("h1",null,"PC\u7EC4\u4EF6\u5217\u8868",-1),r=e("div",{class:"p-4"},null,-1);function _(l,d){return c(),n(t,null,[a,r],64)}const i=s(o,[["render",_]]);export{i as default};

@@ -1,0 +1,116 @@
+{
+  "vite/modulepreload-polyfill": [],
+  "\u0000commonjsHelpers.js": [],
+  "\u0000/home/runner/work/snippets/snippets/node_modules/.pnpm/nprogress@0.2.0/node_modules/nprogress/nprogress.js?commonjs-module": [],
+  "../../node_modules/.pnpm/nprogress@0.2.0/node_modules/nprogress/nprogress.js": [],
+  "src/modules/nprogress.ts": [],
+  "../../node_modules/.pnpm/@vue+shared@3.2.41/node_modules/@vue/shared/dist/shared.esm-bundler.js": [],
+  "../../node_modules/.pnpm/@vue+reactivity@3.2.41/node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js": [],
+  "../../node_modules/.pnpm/@vue+runtime-core@3.2.41/node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js": [],
+  "../../node_modules/.pnpm/@vue+runtime-dom@3.2.41/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-bundler.js": [],
+  "../../node_modules/.pnpm/vue-demi@0.13.11_vue@3.2.41/node_modules/vue-demi/lib/index.mjs": [],
+  "../../node_modules/.pnpm/pinia@2.0.23_l7r24p6nevbtlimqmqcwa3ouhu/node_modules/pinia/dist/pinia.mjs": [],
+  "src/modules/pinia.ts": [],
+  "\u0000vite/preload-helper": [],
+  "src/modules/pwa.ts": [],
+  "../../node_modules/.pnpm/vue-router@4.1.6_vue@3.2.41/node_modules/vue-router/dist/vue-router.mjs": [],
+  "../../node_modules/.pnpm/@vueuse+shared@9.4.0_vue@3.2.41/node_modules/@vueuse/shared/index.mjs": [],
+  "../../node_modules/.pnpm/@vueuse+head@0.9.8_vue@3.2.41/node_modules/@vueuse/head/dist/index.mjs": [],
+  "../../node_modules/.pnpm/vite-ssg@0.21.2_4ifnzfuklk3xjgqlrnavs7serq/node_modules/vite-ssg/dist/shared/vite-ssg.be31ffcd.mjs": [],
+  "../../node_modules/.pnpm/vite-ssg@0.21.2_4ifnzfuklk3xjgqlrnavs7serq/node_modules/vite-ssg/dist/shared/vite-ssg.c3db3195.mjs": [],
+  "../../node_modules/.pnpm/vite-ssg@0.21.2_4ifnzfuklk3xjgqlrnavs7serq/node_modules/vite-ssg/dist/index.mjs": [],
+  "\u0000plugin-vue:export-helper": [],
+  "src/layouts/default.vue": [],
+  "../../../../../../../@vite-plugin-vue-layouts/generated-layouts": [],
+  "\u0000virtual:vue-component-preview": [],
+  "src/App.vue?vue&type=script&setup=true&lang.ts": [],
+  "src/pages/index.vue?vue&type=script&setup=true&lang.ts": [],
+  "../../../../../../../@vite-plugin-pages/route-block": [],
+  "src/pages/index.vue": [],
+  "../../../../../../../@vite-plugin-pages/generated-pages?id=~pages": [],
+  "../../node_modules/.pnpm/@unocss+reset@0.46.3/node_modules/@unocss/reset/tailwind.css": [],
+  "src/styles/main.css": [],
+  "../../../../../../../__uno.css": [],
+  "src/main.ts": [],
+  "index.html": [],
+  "assets/app.e6063f4e.js-unocss-hash.css": [],
+  "../../../../../../../@vite-plugin-pwa/virtual:pwa-register": [
+    "/snippets/assets/virtual_pwa-register.6452252c.js"
+  ],
+  "src/layouts/404.vue?vue&type=script&setup=true&lang.ts": [
+    "/snippets/assets/404.02786400.js"
+  ],
+  "src/layouts/404.vue": [
+    "/snippets/assets/404.02786400.js"
+  ],
+  "src/layouts/code.vue": [
+    "/snippets/assets/code.652201b4.js"
+  ],
+  "src/components/Footer.vue": [
+    "/snippets/assets/home.436fdf6e.js"
+  ],
+  "src/layouts/home.vue": [
+    "/snippets/assets/home.436fdf6e.js"
+  ],
+  "src/pages/shared/index.vue": [
+    "/snippets/assets/index.c059b7b9.js"
+  ],
+  "src/pages/pc/index.vue": [
+    "/snippets/assets/index.9e3e2afa.js"
+  ],
+  "src/pages/h5/index.vue": [
+    "/snippets/assets/index.78e198e5.js"
+  ],
+  "../lib/shared/bem.ts": [
+    "/snippets/assets/bottom-sheet.764f856a.js",
+    "/snippets/assets/bottom-sheet.07666af8.css"
+  ],
+  "../lib/shared/typeof.ts": [
+    "/snippets/assets/bottom-sheet.764f856a.js",
+    "/snippets/assets/bottom-sheet.07666af8.css"
+  ],
+  "../lib/vue/composables/useToggle.ts": [
+    "/snippets/assets/bottom-sheet.764f856a.js",
+    "/snippets/assets/bottom-sheet.07666af8.css"
+  ],
+  "../lib/vue/composables/useTouchMove.ts": [
+    "/snippets/assets/bottom-sheet.764f856a.js",
+    "/snippets/assets/bottom-sheet.07666af8.css"
+  ],
+  "../lib/vue/components/bottom-sheet.vue?vue&type=script&setup=true&lang.ts": [
+    "/snippets/assets/bottom-sheet.764f856a.js",
+    "/snippets/assets/bottom-sheet.07666af8.css"
+  ],
+  "../lib/vue/components/bottom-sheet.vue?vue&type=style&index=0&lang.less": [
+    "/snippets/assets/bottom-sheet.764f856a.js",
+    "/snippets/assets/bottom-sheet.07666af8.css"
+  ],
+  "../lib/vue/components/bottom-sheet.vue?vue&type=style&index=1&scoped=c63c8246&lang.less": [
+    "/snippets/assets/bottom-sheet.764f856a.js",
+    "/snippets/assets/bottom-sheet.07666af8.css"
+  ],
+  "../lib/vue/components/bottom-sheet.vue": [
+    "/snippets/assets/bottom-sheet.764f856a.js",
+    "/snippets/assets/bottom-sheet.07666af8.css"
+  ],
+  "src/pages/h5/bottom-sheet.md?vue&type=script&setup=true&lang.ts": [
+    "/snippets/assets/bottom-sheet.764f856a.js",
+    "/snippets/assets/bottom-sheet.07666af8.css"
+  ],
+  "src/pages/h5/bottom-sheet.md": [
+    "/snippets/assets/bottom-sheet.764f856a.js",
+    "/snippets/assets/bottom-sheet.07666af8.css"
+  ],
+  "src/pages/composables/index.vue": [
+    "/snippets/assets/index.bf22fe1b.js"
+  ],
+  "src/pages/README.md": [
+    "/snippets/assets/README.005300a1.js"
+  ],
+  "src/pages/[...all].vue": [
+    "/snippets/assets/_...all_.368d1064.js"
+  ],
+  "../../node_modules/.pnpm/workbox-window@6.5.4/node_modules/workbox-window/build/workbox-window.prod.es5.mjs": [
+    "/snippets/assets/workbox-window.prod.es5.f4b3e527.js"
+  ]
+}

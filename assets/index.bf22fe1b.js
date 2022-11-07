@@ -1,0 +1,1 @@
+import{f as s,o,c,F as n,b as e}from"./app.e6063f4e.js";const t={},a=e("h1",null,"Vue3 Composables \u51FD\u6570",-1),r=e("div",{class:"p-4"},null,-1);function l(_,d){return o(),c(n,null,[a,r],64)}const i=s(t,[["render",l]]);export{i as default};
