@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <nav class="flex justify-between items-center py-4">
+  <nav class="flex justify-between items-center pt-4">
     <div>QIYUOR2 © 2022</div>
     <div>
       <a
