@@ -1,28 +1,28 @@
-name: GitHub Pages
-on:
-  push:
-    branches:
-      - main
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
+# name: GitHub Pages
+# on:
+#   push:
+#     branches:
+#       - main
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           submodules: true
 
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+#       - name: Setup Node
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: '14'
 
-      - run: npm install -g pnpm
-      - run: pnpm install
-      - run: pnpm run build:vue
+#       - run: npm install -g pnpm
+#       - run: pnpm install
+#       - run: pnpm run build:vue
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
-          publish_dir: ./dist/vue-demo
-          force_orphan: true
+#       - name: Deploy
+#         uses: peaceiris/actions-gh-pages@v3
+#         with:
+#           github_token: ${{ secrets.ACCESS_TOKEN }}
+#           publish_dir: ./dist/vue-demo
+#           force_orphan: true

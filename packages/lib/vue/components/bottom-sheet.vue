@@ -55,6 +55,7 @@ const BasicV = 0.5;
 const [isTouching, toggleIsTouching] = useToggle(false);
 const willToPosition = ref("");
 const { distanceY, deltaTime, touchStart, touchMove, touchEnd } = useTouchMove({
+  preventDefault: true,
   onTouchStart() {
     toggleIsTouching(true);
     willToPosition.value = "";
