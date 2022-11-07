@@ -16,8 +16,9 @@ jobs:
         with:
           node-version: '14'
 
-      - run: npm install
-      - run: npm run build
+      - run: npm install -g pnpm
+      - run: pnpm install
+      - run: pnpm run build:vue
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
