@@ -1,3 +1,53 @@
+---
+title: 底部弹层组件
+---
+
+# 底部弹层组件
+
+<script setup lang="ts">
+import BottomSheet from "@lib/vue/components/bottom-sheet.vue";
+import useToggle from "@lib/vue/composables/useToggle";
+
+const [visible, toggle] = useToggle(false);
+</script>
+
+<div>
+  <button class="button" @click="toggle()">点击切换弹层状态</button>
+</div>
+<BottomSheet v-model:visible="visible" show-active-bar>
+  <div class="px-4">内容</div>
+</BottomSheet>
+
+<route lang="yaml">
+meta:
+  layout: code
+</route>
+
+**注意**: 该组件交互基于 Touch 事件编写，PC 仅点击有效
+
+## 示例代码
+
+```vue
+<script setup lang="ts">
+import BottomSheet from "@lib/vue/components/bottom-sheet.vue";
+import useToggle from "@lib/vue/composables/useToggle";
+
+const [visible, toggle] = useToggle(false);
+</script>
+
+<template>
+  <div>
+    <div @click="toggle()">点击展开</div>
+  </div>
+  <BottomSheet v-model:visible="visible" show-active-bar>
+    <div class="px-4">内容</div>
+  </BottomSheet>
+</template>
+```
+
+## 源码
+
+```vue
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 
@@ -114,7 +164,6 @@ const triggerAnimeStyle = computed(() => {
         v-if="selfVisible"
         class="overlay"
         @click="overlayClickHandler"
-        @touchstart.stop="$event.preventDefault()"
       ></div>
     </Transition>
     <div
@@ -196,3 +245,4 @@ const triggerAnimeStyle = computed(() => {
   }
 }
 </style>
+```

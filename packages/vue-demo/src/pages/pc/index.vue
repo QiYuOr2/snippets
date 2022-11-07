@@ -1,5 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <!-- <nav text-xl>footer</nav> -->
+  <h1>PC组件列表</h1>
+  <div class="p-4">
+  </div>
 </template>
