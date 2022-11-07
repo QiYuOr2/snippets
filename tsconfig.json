@@ -8,11 +8,21 @@
     "strict": true,
     "strictNullChecks": true,
     "resolveJsonModule": true,
+    "baseUrl": "./packages",
     "paths": {
-      "~vue/*": ["./lib/vue/*"],
-      "~shared/*": ["./lib/shared/*"],
-      "~style/*": ["./lib/style/*"]
-    }
+      "~/*": ["./vue-demo/src/*"],
+      "@lib/vue/*": ["./lib/vue/*"],
+      "@lib/shared/*": ["./lib/shared/*"],
+      "@lib/style/*": ["./lib/style/*"]
+    },
+    "types": [
+      "vite/client",
+      "vue/ref-macros",
+      "vite-plugin-pages/client",
+      "vite-plugin-vue-component-preview/client",
+      "vite-plugin-vue-layouts/client",
+      "vite-plugin-pwa/client"
+    ]
   },
-  "include": ["./lib/**/*.ts", "./lib/**/*.vue", "./demo/**/*.ts", "./demo/**/*.vue"]
+  "include": ["./packages/lib/**/*.ts", "./packages/lib/**/*.vue", "./packages/vue-demo/**/*.ts", "./packages/vue-demo/**/*.vue"]
 }
