@@ -9,6 +9,7 @@ const counts = reactive({
 
 <template>
   <h1 class="text-2xl pb-4 font-bold">代码片段效果展示</h1>
+  <p class="text-left pb-4">代码片段的是用来在遇到相同业务时能够节约开发时间，因此不像组件库、方法库那样完善。</p>
   <p class="flex pb-4">
     <span>仓库：</span>
     <a

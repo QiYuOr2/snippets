@@ -127,6 +127,9 @@ const triggerAnimeStyle = computed(() => {
         @touchstart.stop="touchStart"
         @touchmove.stop="touchMove"
         @touchend.stop="touchEnd"
+        @mousedown.stop="touchStart"
+        @mousemove.stop="touchMove"
+        @mouseup.stop="touchEnd"
         @click.stop="toggleSelfVisible()"
       >
         <div class="active-bar"></div>

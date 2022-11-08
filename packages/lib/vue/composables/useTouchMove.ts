@@ -1,18 +1,38 @@
 import { computed, ref, watchEffect } from "vue";
 
+type TouchEventHandler = (event: TouchEvent) => void;
+type MouseEventHandler = (event: MouseEvent) => void;
+type EventHandler = TouchEventHandler & MouseEventHandler;
+
 interface UseTouchMoveOptions {
-  onTouchStart?: (event: TouchEvent) => void;
-  onTouchMove?: (event: TouchEvent) => void;
-  onTouchEnd?: (event: TouchEvent) => void;
+  onTouchStart?: EventHandler;
+  onTouchMove?: EventHandler;
+  onTouchEnd?: EventHandler;
   preventDefault?: boolean;
+  supportMouseClick?: boolean;
 }
 
 interface TouchHandlerHooks {
-  beforeTriggerEventHandler?: (event: TouchEvent) => void;
-  afterTriggerEventHandler?: (event: TouchEvent) => void;
+  beforeTriggerEventHandler?: (event: TouchEvent | MouseEvent) => void;
+  afterTriggerEventHandler?: (event: TouchEvent | MouseEvent) => void;
+}
+
+export function isTouchEvent(
+  event: TouchEvent | MouseEvent
+): event is TouchEvent {
+  return (<TouchEvent>event).touches !== undefined;
 }
 
 export default function useTouchMove(options?: UseTouchMoveOptions) {
+  const getPoint = (event: TouchEvent | MouseEvent) => {
+    if (options?.supportMouseClick === false) {
+      return (<TouchEvent>event).touches[0];
+    }
+    return isTouchEvent(event) ? event.touches[0] : event;
+  };
+
+  const isStartClick = ref(false);
+
   const oldX = ref(0);
   const oldY = ref(0);
   const x = ref(0);
@@ -35,40 +55,46 @@ export default function useTouchMove(options?: UseTouchMoveOptions) {
     return endTime.value - startTime.value;
   });
 
-  const handler = (
-    eventHandler: (event: TouchEvent) => void,
-    hooks?: TouchHandlerHooks
-  ) => {
-    return (event: TouchEvent) => {
+  const handler = (eventHandler: EventHandler, hooks?: TouchHandlerHooks) => {
+    return (event: TouchEvent | MouseEvent) => {
       hooks?.beforeTriggerEventHandler?.(event);
 
       options?.preventDefault && event.preventDefault();
-      eventHandler(event);
+
+      isTouchEvent(event) ? eventHandler(event) : eventHandler(event);
 
       hooks?.afterTriggerEventHandler?.(event);
     };
   };
 
   const touchStart = handler(
-    (event: TouchEvent) => {
+    (event: TouchEvent | MouseEvent) => {
       // 清空x, y
       oldX.value = 0;
       oldY.value = 0;
       x.value = 0;
       y.value = 0;
 
-      options?.onTouchStart?.(event);
+      isTouchEvent(event)
+        ? options?.onTouchStart?.(event)
+        : options?.onTouchStart?.(event);
     },
     {
+      beforeTriggerEventHandler(event) {
+        if (!isTouchEvent(event)) {
+          isStartClick.value = true;
+        }
+      },
       afterTriggerEventHandler(event) {
+        const point = getPoint(event);
+
         // 记录点下的时间
         startTime.value = Date.now();
         endTime.value = 0;
 
         // 记录首次点击位置
-        const touchPoint = event.touches[0];
-        x.value = touchPoint?.pageX ?? 0;
-        y.value = touchPoint?.pageY ?? 0;
+        x.value = point?.pageX ?? 0;
+        y.value = point?.pageY ?? 0;
 
         // 缓存首次点击位置
         oldX.value = x.value;
@@ -77,24 +103,33 @@ export default function useTouchMove(options?: UseTouchMoveOptions) {
     }
   );
   const touchMove = handler(
-    (event: TouchEvent) => {
-      options?.onTouchMove?.(event);
+    (event: TouchEvent | MouseEvent) => {
+      isTouchEvent(event)
+        ? options?.onTouchMove?.(event)
+        : options?.onTouchMove?.(event);
     },
     {
       afterTriggerEventHandler(event) {
+        if (!isTouchEvent(event) && !isStartClick.value) {
+          return;
+        }
+        const point = getPoint(event);
+
         // 记录每次滑动的位置
-        const touchPoint = event.touches[0];
-        x.value = touchPoint?.pageX ?? 0;
-        y.value = touchPoint?.pageY ?? 0;
+        x.value = point?.pageX ?? 0;
+        y.value = point?.pageY ?? 0;
       },
     }
   );
   const touchEnd = handler(
-    (event: TouchEvent) => {
-      options?.onTouchEnd?.(event);
+    (event: TouchEvent | MouseEvent) => {
+      isTouchEvent(event)
+        ? options?.onTouchEnd?.(event)
+        : options?.onTouchEnd?.(event);
     },
     {
       beforeTriggerEventHandler() {
+        isStartClick.value = false;
         // 结束时间
         endTime.value = Date.now();
       },
