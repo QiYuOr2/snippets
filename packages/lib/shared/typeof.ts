@@ -1,3 +1,7 @@
+export function typeIs<T>(value: unknown): T {
+  return value as T;
+}
+
 /**
  * 判断是否为 undefined 或 null
  */

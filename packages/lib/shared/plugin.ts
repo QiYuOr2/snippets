@@ -28,9 +28,7 @@ class BasePlugin implements IPlugin {
   }
 }
 
-/**
- * 自定义插件，各个插件的逻辑写在构造方法中，同时也可以自定义main方法
- */
+//#region 自定义插件，各个插件的逻辑写在构造方法中，同时也可以自定义main方法
 class APlugin extends BasePlugin {
   constructor() {
     super()
@@ -45,6 +43,7 @@ class BPlugin extends BasePlugin {
     // 实现插件逻辑
   }
 }
+//#endregion
 
 // import * as PluginModules from 'path/plugins'
 const PluginModules = { plugin1: APlugin, plugin2: BPlugin }
