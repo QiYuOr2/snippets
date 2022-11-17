@@ -5,14 +5,22 @@
   "main": "index.js",
   "scripts": {
     "dev:vue": "pnpm --filter \"@snippets/vue-demo\" run dev",
-    "build:vue": "pnpm --filter \"@snippets/vue-demo\" run build"
+    "build:vue": "pnpm --filter \"@snippets/vue-demo\" run build",
+
+    "dev:script": "pnpm --filter \"@snippets/script-demo\" run dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.11.9",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "^8.27.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.5.0",
+    "eslint-plugin-promise": "^6.1.1"
   },
   "dependencies": {
     "vue": "^3.2.41"

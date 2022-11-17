@@ -6,7 +6,7 @@ export function omit<T, K extends keyof T>(target: T, ...keys: K[]) {
     if (keys.length === 0) {
       return rest as T;
     }
-    
+
     return action(rest as T, keys.pop()!);
   };
   return action(target, keys.pop()!);

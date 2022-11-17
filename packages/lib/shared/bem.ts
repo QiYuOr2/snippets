@@ -14,13 +14,13 @@ export default function bemCreator(block: string) {
     const namespace = element ? `${block}__${element}` : block;
     const states = Object.keys(modifier || {}).reduce<string[]>(
       (classNames, currentKey) => {
-        const currentState = !!modifier?.[currentKey]
+        const currentState = modifier?.[currentKey]
           ? `${namespace}--${currentKey}`
-          : "";
+          : '';
         return currentState ? [...classNames, currentState] : classNames;
       },
       []
     );
-    return [namespace, ...states].join(" ");
+    return [namespace, ...states].join(' ');
   };
 }

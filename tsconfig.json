@@ -24,5 +24,11 @@
       "vite-plugin-pwa/client"
     ]
   },
-  "include": ["./packages/lib/**/*.ts", "./packages/lib/**/*.vue", "./packages/vue-demo/**/*.ts", "./packages/vue-demo/**/*.vue"]
+  "include": [
+    "./packages/lib/**/*.ts",
+    "./packages/lib/**/*.vue",
+    "./packages/vue-demo/**/*.ts",
+    "./packages/vue-demo/**/*.vue",
+    "./packages/script-demo/**/*.ts"
+  ]
 }

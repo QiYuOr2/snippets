@@ -13,5 +13,5 @@ export function isUndef(value: unknown): value is undefined | null {
  * 判断是否为 string
  */
 export function isString(value: unknown): value is string {
-  return typeof value === "string";
+  return typeof value === 'string';
 }
