@@ -15,3 +15,11 @@ export function isUndef(value: unknown): value is undefined | null {
 export function isString(value: unknown): value is string {
   return typeof value === 'string';
 }
+
+export function isNumber(value: unknown): value is number {
+  return typeof value === 'number';
+}
+
+export function isNumberArray(value: unknown[]): value is number[] {
+  return value.every(item => typeof item === 'number');
+}

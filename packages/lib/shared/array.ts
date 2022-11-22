@@ -1,3 +1,5 @@
+import { isNumberArray } from './typeof';
+
 /**
  * Array工具库
  * @param value 源数组
@@ -8,7 +10,13 @@ export function ArrayUtils<T>(value: Array<T>) {
     return source[Math.floor(Math.random() * source.length)];
   };
 
-  return { random };
-}
+  const average = () => {
+    const source = value.slice(0);
+    if (!isNumberArray(source)) {
+      throw new TypeError('请传入数字数组');
+    }
+    return (source as number[]).reduce((a, b) => a + b) / source.length;
+  };
 
-ArrayUtils([1, 2, 3, 4]).random();
+  return { random, average };
+}

@@ -1,3 +1,4 @@
+import { ArrayUtils } from '@lib/shared/array';
 import { pipe } from '@lib/shared/pipe';
 
 const asyncDouble = (value: number) =>
@@ -14,4 +15,6 @@ const compute = pipe(
 
 (async () => {
   console.log(await compute(-1));
+
+  console.log(ArrayUtils([2, 'a', { c: 1 }]).random());
 })();
